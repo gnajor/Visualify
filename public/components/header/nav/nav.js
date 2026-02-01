@@ -38,7 +38,7 @@ export function renderNav(parent){
 
     dashboardItem.addEventListener("click", () => {
         dashboardIconChange("add");
-
+        
         if(document.querySelector("header nav .nav-item.marked")){
             updateCurrentMainPage(`${-currentPageId * 100}vw`, "100vh", currentPageId);
 
@@ -67,11 +67,8 @@ export function renderNav(parent){
 
 export function updateNavMarker(){
     const markedElement = document.querySelector("header nav .nav-item.marked");
-
-    if(markedElement){
-        const menu = document.querySelector("header nav #nav-items");
-        updateMarker(markedElement, menu, marker);
-    }
+    const menu = document.querySelector("header nav #nav-items");
+    updateMarker(markedElement, menu, marker)
 }
 
 export function updateMarker(element, menu, marker){
