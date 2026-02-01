@@ -1,21 +1,4 @@
-import { onSelectorChange } from "../../../components/header/selector/selector.js";
-import { getGenreData } from "../../../logic/utils.js";
-
-export function renderGenresPage(parent){
-    const dataset = getGenreData(); 
-
-    const diagramContainer = document.createElement("div");
-    diagramContainer.className = "diagram-container";
-    parent.appendChild(diagramContainer);
-
-    const bubbleChart = new BubbleChart(diagramContainer, dataset["short_term"]);
-
-    onSelectorChange((event) => {
-        bubbleChart.changeData(dataset[event.target.value]);
-    }); 
-}
-
-class BubbleChart{
+export class BubbleChart{
     constructor(parent, dataset){
         this.parent = d3.select(parent);
         this.dataset = dataset;

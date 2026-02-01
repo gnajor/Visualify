@@ -1,6 +1,6 @@
-import { apiCom } from "../../../apiCom/apiCom.js";
+import { apiCom } from "../../../../apiCom/apiCom.js";
 import { onSelectorChange } from "../../../components/header/selector/selector.js";
-import { getMoodsChartData} from "../../../logic/utils.js";
+import { getMoodsChartData} from "../../../../logic/utils.js";
 
 export function renderMoodsPage(parent){
     const dataset = getMoodsChartData();

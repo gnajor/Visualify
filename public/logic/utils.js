@@ -249,3 +249,13 @@ export function findArray(arr, func){
     }
     return null;
 }
+
+export function updateMarker(element, menu, marker){
+    const rect = element.getBoundingClientRect();
+    const menuRect = menu.getBoundingClientRect();
+    const left = rect.left - menuRect.left;
+
+    marker.style.width = rect.width + "px";
+    marker.style.height = rect.height + "px";
+    marker.style.transform = `translate(${left}px)`;
+}

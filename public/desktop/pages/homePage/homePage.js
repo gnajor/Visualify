@@ -1,5 +1,5 @@
-import { Logo } from "../../components/logo/logo.js";
-import { State } from "../../index.js";
+import { Logo } from "../../../sharedComponents/logo/logo.js";
+import { State } from "../../../index.js";
 
 export function renderHomePage(parent){
     parent.innerHTML = `<div id="home-page">
@@ -19,7 +19,7 @@ export function renderHomePage(parent){
 
     const loginButton = parent.querySelector("button#login");
     const logoContainer = parent.querySelector("#logo");
-    const logo = new Logo(logoContainer, 500, 100, 80, 350);
+    const logo = new Logo(logoContainer, 500, 90, 30, 140);
     logo.initLogo();
     logo.initAnimation();
 

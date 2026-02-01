@@ -1,4 +1,4 @@
-import {apiCom} from "../../apiCom/apiCom.js";
+import {apiCom} from "../../../apiCom/apiCom.js";
 
 export function renderSideButtons(parent){
     parent.innerHTML = `<div id="info-icon-container" class="circle-box">
