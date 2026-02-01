@@ -1,8 +1,8 @@
 import { onSelectorChange, getSelectorValue } from "../../../components/header/selector/selector.js";
-import { getMostPlayedData } from "../../../../logic/utils.js";
-import { formatSongs } from "../../../../logic/utils.js";
-import { DonutChart } from "../../../../sharedComponents/donutChart/donutChart.js";
-import { getCurrentSwitchState, onClickSwitch } from "../../../../sharedComponents/switch/switch.js";
+import { Switch } from "../../../components/header/switch/switch.js";
+import { getMostPlayedData } from "../../../logic/utils.js";
+import { formatSongs } from "../../../logic/utils.js";
+import { DonutChart } from "../../../components/donutChart/donutChart.js";
 
 export function renderMostPlayedPage(parent){
     const parentId = "#" + parent.id;
@@ -15,17 +15,18 @@ export function renderMostPlayedPage(parent){
     parent.appendChild(dataDetailsContainer);
     parent.appendChild(diagramContainer);
 
-    const spiral = new Spiral(`${parentId} .${diagramContainer.className}`, dataset[getCurrentSwitchState()][getSelectorValue()]);
-    renderDataDetails(dataDetailsContainer, dataset[getCurrentSwitchState()][getSelectorValue()]);
+    const switchInstance = Switch.getSwitchByPageId(parent.id);
+    const spiral = new Spiral(`${parentId} .${diagramContainer.className}`, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
+    renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
 
-    onClickSwitch((event) => {
-        spiral.changeData(dataset[getCurrentSwitchState()][getSelectorValue()]);
-        renderDataDetails(dataDetailsContainer, dataset[getCurrentSwitchState()][getSelectorValue()]);
+    switchInstance.event(() => {
+        spiral.changeData(dataset[switchInstance.currentSwitchState][getSelectorValue()]);
+        renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
     });
 
     onSelectorChange((event) => {
-        spiral.changeData(dataset[getCurrentSwitchState()][event.target.value]);
-        renderDataDetails(dataDetailsContainer, dataset[getCurrentSwitchState()][event.target.value]);
+        spiral.changeData(dataset[switchInstance.currentSwitchState][event.target.value]);
+        renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][event.target.value]);
     }); 
 }
 

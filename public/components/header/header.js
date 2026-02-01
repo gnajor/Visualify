@@ -1,9 +1,9 @@
-import { Logo } from "../../../sharedComponents/logo/logo.js";
-import { renderNav } from "../../../desktop/components/header/nav/nav.js";
-import { renderSelector } from "../header/selector/selector.js";
-import { renderSwitch } from "../../../sharedComponents/switch/switch.js";
+import { Logo } from "../logo/logo.js";
+import { renderNav } from "./nav/nav.js";
+import { renderSelector } from "./selector/selector.js";
+import { Switch } from "./switch/switch.js";
 
-export function renderHeader(parent){
+export function renderHeader(parent, pageDoms){
     parent.innerHTML = `<div id="logo"></div>
                         <nav></nav>
                         <div id="properties-container">
@@ -19,7 +19,7 @@ export function renderHeader(parent){
 
     const width = "10rem";
     const height = "100%";
-    const logo = new Logo(logoParent, width, height, 30, 150);
+    const logo = new Logo(logoParent, width, height, 80, 350);
     logo.initLogo();
     renderNav(navContainer);
 
@@ -27,5 +27,17 @@ export function renderHeader(parent){
     propertiesContainer.style.height = height;
 
     renderSelector(selectContainer);
-    renderSwitch(switchContainer);
+
+    pageDoms.forEach((page, i) => {
+        let switchCounter = 0;
+        
+        if(page.className === "switch-button-needed"){
+            const switchInstance = new Switch(switchContainer, page.id, i);  
+            
+            if(switchCounter === 0){
+                switchCounter++;
+                switchInstance.element.classList.add("current");
+            }
+        } 
+    });
 }

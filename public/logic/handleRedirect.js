@@ -13,8 +13,10 @@ export async function handleRedirect() {
         return;
     }
 
+    // Optional: clean up URL
     window.history.replaceState({}, document.title, "/");
 
+    // Send to backend to exchange for token
     const response = await fetch("/api/set-token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

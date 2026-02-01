@@ -1,62 +1,5 @@
-import { updateMarker } from "../../logic/utils.js";
+import { updateMarker } from "../nav/nav.js";
 
-let switchElement = null;
-
-export function renderSwitch(parent){
-    switchElement = document.createElement("div");
-    switchElement.className = "switch current";
-    parent.appendChild(switchElement);
-    switchElement.setAttribute("switch-state", "artists");
-
-    const cwdImg = "../../../media/icons/";
-
-    switchElement.innerHTML = `  <div id="artists">
-                                    <img src="${cwdImg}artists.svg">
-                                </div>
-                                <div id="tracks">
-                                    <img src="${cwdImg}tracks.svg">
-                                </div>
-                                <div id="switch-marker"></div>`;
-}
-
-export function onClickSwitch(callback){
-        const marker = switchElement.querySelector("#switch-marker");
-        const artistBox = switchElement.querySelector("#artists");
-
-        artistBox.classList.add("marked");
-        updateMarker(artistBox, switchElement, marker);
-
-        switchElement.addEventListener("click", (event) => {
-            const currentState = switchElement.getAttribute("switch-state");
-
-            if(currentState === "artists"){
-                switchElement.querySelector("#artists").classList.remove("marked");
-                switchElement.setAttribute("switch-state", "tracks");
-                switchElement.querySelector("#tracks").classList.add("marked");
-            }
-            else{
-                switchElement.querySelector("#tracks").classList.remove("marked");
-                switchElement.setAttribute("switch-state", "artists");
-                switchElement.querySelector("#artists").classList.add("marked");
-            }
-
-            updateSwitchMarker();
-            callback();
-        })
-}
-
-export function updateSwitchMarker(){
-    const elementMarked = switchElement.querySelector(".marked");
-    const marker = switchElement.querySelector("#switch-marker");
-    updateMarker(elementMarked, switchElement, marker);
-}
-
-export function removeSwitch(){switchElement.classList.remove("current");}
-export function addSwitch(){switchElement.classList.add("current");}
-export function getCurrentSwitchState(){return switchElement.getAttribute("switch-state")}
-
-
-/*
 export class Switch{
     static switchInstances = [];
     
@@ -136,4 +79,4 @@ export class Switch{
             func();
         })
     }
-}*/
+}

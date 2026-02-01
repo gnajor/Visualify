@@ -1,8 +1,8 @@
-import { getMapData } from "../../../../logic/utils.js";
-import { apiCom } from "../../../../apiCom/apiCom.js";
+import { getMapData } from "../../../logic/utils.js";
+import { apiCom } from "../../../apiCom/apiCom.js";
 import { onSelectorChange } from "../../../components/header/selector/selector.js";
-import { State } from "../../../../index.js";
-import { findArray } from "../../../../logic/utils.js";
+import { State } from "../../../index.js";
+import { findArray } from "../../../logic/utils.js";
 
 export function renderMapPage(parent){
     const dataset = getMapData();

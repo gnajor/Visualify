@@ -2,7 +2,7 @@
     height: 100%;
 
     display: flex;
-    gap:1.5rem;
+    gap:1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
