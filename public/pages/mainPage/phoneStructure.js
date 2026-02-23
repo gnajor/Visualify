@@ -1,13 +1,7 @@
-import { renderHeader } from "../../components/header/header.js";
-import { renderDecadePage } from "../mainPage/decadesPage/decadesPage.js";
-import { renderMostPlayedPage } from "./mostPlayedPage/mostPlayedPage.js";
-import { renderGenresPage } from "./genresPage/genresPage.js";
-import { renderMapPage } from "./mapPage/mapPage.js";
-import { renderMoodsPage } from "./moodsPage/moodsPage.js";
-import { renderSideButtons } from "../../components/sideButtons/sideButtons.js";
-import { renderSummaryPage } from "./summaryPage/summaryPage.js";
+import { renderPhoneHeader } from "../../components/header/phoneHeader.js";
+import { renderPhoneMostPlayedPage } from "./mostPlayedPage/phoneMostPlayedPage.js";
 
-export function renderStructure(parent){
+export function renderPhoneStructure(parent){
     parent.innerHTML = `<header></header>
                         <main>
                             <section id="most-played-page" class="switch-button-needed"></section>
@@ -16,8 +10,7 @@ export function renderStructure(parent){
                             <section id="moods-page"></section>
                             <section id="music-map-page"></section>
                             <section id="summary-page"></section>
-                        </main>
-                        <div id="side-buttons"></div>`;
+                        </main>`;
 
     const mostPlayedPage = parent.querySelector("#most-played-page");
     const genrePage = parent.querySelector("#genre-page");
@@ -29,18 +22,14 @@ export function renderStructure(parent){
     const header = parent.querySelector("header");
     
     const pageDoms = parent.querySelectorAll("section");
-    renderHeader(header, pageDoms);
-    renderDecadePage(decadePage);
+    renderPhoneHeader(header, pageDoms);
+    renderPhoneMostPlayedPage(mostPlayedPage);
+
+/*     renderDecadePage(decadePage);
     renderMostPlayedPage(mostPlayedPage);
     renderGenresPage(genrePage);
     renderMapPage(musicMapPage);
     renderMoodsPage(moodsPage);
     renderSideButtons(sideButtons);
-    renderSummaryPage(summaryPage);
+    renderSummaryPage(summaryPage); */
 }
-
-export function updateSummaryPagePos(value){
-    const summaryPage = document.querySelector("#summary-page");
-    summaryPage.style.left = value;
-}
-
