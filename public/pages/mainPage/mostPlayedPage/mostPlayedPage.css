@@ -1,14 +1,14 @@
-#most-played-page .diagram-container{
+.desktop #most-played-page .diagram-container{
     margin: auto;
     aspect-ratio: 1.5 / 1;
 }
 
-#most-played-page svg image{
+.desktop #most-played-page svg image{
     transition: 200ms filter ease-in-out;   
     cursor: pointer;
 }
 
-#most-played-page svg image.gray{
+.desktop #most-played-page svg image.gray{
     filter: grayscale(0.7) brightness(0.5);
 }
 
@@ -58,7 +58,7 @@
     font-style: italic;
 }
 
-#most-played-page #data-details-container text{
+ #most-played-page #data-details-container text{
     font-weight: bold;
 }
 
@@ -78,4 +78,81 @@
 
 #most-played-page .donut-chart text{
     font-size: 1.5rem;
+}
+
+
+/* 
+--------------------
+Phone
+--------------------
+*/
+
+.phone #most-played-page{
+    padding:0 2rem;
+}
+
+#most-played-page #data-details-container .item-details{
+    bottom: 0;
+    left: 0;
+}
+
+.phone #most-played-page .diagram-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 1.25rem;
+}
+
+.phone #most-played-page .diagram-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border:1px solid var(--dark-grey);
+}
+
+.phone #most-played-page #data-details-container{
+    height: 20%;
+    position: relative;
+    margin:0 1.5rem;
+}
+
+.phone #most-played-page .item{
+    filter: grayscale(0) brightness(1);
+    transition: 300ms all ease-in-out;
+    cursor: pointer;
+    width: 6rem;
+    height: 6rem;
+    animation: popIn 0.3s ease-out both;
+}
+
+.phone #most-played-page #data-details-container .item-details .item-name{
+    font-size: 1.8rem;
+}
+
+.phone #most-played-page #data-details-container .item-details .popularity-title{
+    font-size: 1.6rem;
+}
+
+.phone #most-played-page .item.gray{
+    filter: grayscale(0.7) brightness(0.5);
+
+}
+
+.phone #most-played-page .item.focus{
+    filter: grayscale(0) brightness(1.25);
+}
+
+.phone #most-played-page .donut-chart text{
+    font-size: 2.5rem;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

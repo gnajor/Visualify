@@ -4,7 +4,9 @@ import { Switch } from "./components/header/switch/switch.js";
 import { handleRedirect } from "./logic/handleRedirect.js";
 import { getAllTopUserDataAndSetState, setStateToServer } from "./logic/utils.js";
 import { renderHomePage } from "./pages/homePage/homePage.js";
+import { renderPhoneHomePage } from "./pages/homePage/phoneHomePage.js";
 import { updateArtistDivPosition } from "./pages/mainPage/decadesPage/decadesPage.js";
+import { renderPhoneStructure } from "./pages/mainPage/phoneStructure.js";
 import { renderStructure } from "./pages/mainPage/structure.js";
 
 
@@ -102,12 +104,18 @@ const app = {
 
         if(!isTokenCorrect.ok){
             const handled = await handleRedirect();
-            renderHomePage(this.parent);   
+            this.parent.classList.add("phone");
+            renderPhoneHomePage(this.parent);
+            //window.onresize = app.onResizeWindow;
+            //renderHomePage(this.parent);   
+            //this.parent.classList.add("desktop");
         }
         else{
+            this.parent.classList.add("phone");
             await getAllTopUserDataAndSetState();
             setStateToServer();
-            renderStructure(this.parent);
+            /* renderStructure(this.parent); */
+            renderPhoneStructure(this.parent);
         }
     },
 
@@ -124,5 +132,4 @@ const app = {
     }
 }
 
-window.onresize = app.onResizeWindow;
 app.start();

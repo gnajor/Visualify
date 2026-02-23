@@ -34,24 +34,26 @@
 
 body{
     margin: 0;
-    background-color: var(--main-black-color);
+    background-color: #251741;
     font-family: sans-serif;
     overflow: hidden;
 }
 
-body::before{
+html:has(#wrapper.phone) body:before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, #251741 0%, #0E0A0F 51.44%, #190F2B 100%);
+    z-index: -1;
+}
+
+html:has(#wrapper.desktop) body::before{
     content: "";
     position: fixed;
     inset: 0;
     background: linear-gradient(130deg,rgb(14, 10, 15) 10%, rgb(37, 23, 65) 100%);
     z-index: -1;
-
-    /* transition: 300ms all ease-in-out; */
 }
-
-/* body.change::before{
-    filter: hue-rotate(60deg) brightness(100%);
-} */
 
 p,h1,h2,h3,h4{
     margin: 0;
@@ -82,13 +84,18 @@ section{
     min-width: 100vw;
 }
 
-section .diagram-container{
+.desktop section .diagram-container{
     font-size: 16px;
 
     display: flex;
     justify-content: center;
     align-items: center;
     height: calc(100vh - var(--header-container-height));
+}
+
+.phone section .diagram-container{
+    display: flex;
+    justify-content: center;
 }
 
 section#summary-page{
@@ -108,12 +115,40 @@ section#summary-page{
     gap:1rem;
 }
 
+#wrapper.phone{
+    overflow: hidden;
+    height: 100dvh;
+}
 
-#wrapper:has(#home-page){
-    height: 100vh;
+.phone section{
+    height: calc(100dvh - 15rem);
 }
 
 
+
+@media only screen and (max-width: 1600px) {
+    :root{
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 1450px) {
+    :root{
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    :root{
+        font-size: 13px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    :root{
+        font-size: 11px;
+    }
+}
 
 
 

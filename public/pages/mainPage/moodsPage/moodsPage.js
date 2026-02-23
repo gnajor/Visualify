@@ -71,6 +71,7 @@ function radarController(parent, fullDataset){
         }
         
         if(datasetToSetAndGet.length !== 0){
+            console.log(datasetToSetAndGet)
             const data = await apiCom("songs:get-features", datasetToSetAndGet); //gets the song features
             moodsData = data.resource; 
         }
