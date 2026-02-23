@@ -19,13 +19,22 @@
     padding:0.75rem 2rem;
     background-color: var(--main-green-color);
     border-radius: 3rem;
+
+    position: relative;
+    z-index: 5;
 }
 
-#home-page img{
+/* 
+-----------------------
+Desktop Version
+----------------------
+*/
+
+.desktop #home-page img{
     width: 1.75rem;
 }
 
-#home-page #circle-box .circle{
+.desktop #home-page #circle-box .circle{
     border-radius: 50%;
     filter: blur(2rem);
     position: absolute;
@@ -34,7 +43,7 @@
     z-index: -1;
 }
 
-#home-page #circle-box #circle-one{
+.desktop #home-page #circle-box #circle-one{
     background-color: var(--green-bubble-color);
     width: 25rem;
     height: 25rem;
@@ -44,7 +53,7 @@
     animation-name: circleOneMove;
     animation-duration: 35s;
 }
-#home-page #circle-box #circle-two{
+.desktop #home-page #circle-box #circle-two{
     background-color: var(--purple-bubble-color);
     width: 12rem;
     height: 12rem;
@@ -54,7 +63,7 @@
     animation-name: circleTwoMove;
     animation-duration: 15s;
 }
-#home-page #circle-box #circle-three{
+.desktop #home-page #circle-box #circle-three{
     background-color: var(--purple-bubble-dark-color);
     width: 32rem;
     height: 32rem;
@@ -64,7 +73,7 @@
     animation-name: circleThreeMove;
     animation-duration: 40s;
 }
-#home-page #circle-box #circle-four{
+.desktop #home-page #circle-box #circle-four{
     background-color: var(--green-bubble-color);
     width: 25rem;
     height: 25rem;
@@ -74,7 +83,7 @@
     animation-name: circleFourMove;
     animation-duration: 25s;
 }
-#home-page #circle-box #circle-five{
+.desktop #home-page #circle-box #circle-five{
     background-color: var(--purple-bubble-color);
     width: 20rem;
     height: 20rem;
@@ -153,3 +162,117 @@
 }
 
 
+/* 
+-----------------------
+Phone Version
+----------------------
+*/
+
+#wrapper:has(#home-page){
+    overflow: hidden;
+}
+
+.phone #home-page{
+    justify-content: unset;
+    align-items: unset;
+    width: 120%;
+
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.phone #home-page #logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+
+    position: relative;
+    z-index: 5;
+}
+
+.phone #home-page #bottom .circle-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(0deg, #251741 48%, #0E0A0F 85%);
+    border-radius: 50% 50% 0 0;
+}
+
+.phone #home-page #top .circle-box{
+    background: linear-gradient(180deg, #251741 48.56%, #0E0A0F 89.9%);
+        border-radius: 0 0 50% 50%;
+}
+
+.phone #home-page #bottom.circle-border{
+    background: linear-gradient(0deg, #140E1C 72%, #6E4F9D 94%, #A677E2 100%);
+    padding: 0.45rem 0.45rem 0 0.45rem; 
+    border-radius: 50% 50% 0 0; 
+}
+
+.phone #home-page #top.circle-border{
+    background: linear-gradient(180deg, #140E1C 72%, #6E4F9D 94%, #A677E2 100%);
+    padding: 0 0.45rem 0.45rem 0.45rem; 
+    border-radius: 0 0 50% 50%;
+}
+
+.phone #home-page .circle-box{
+    height: 100%;
+    width: 100%;
+}
+
+.phone #home-page .circle-border{
+    width: 120vw;
+    height: 120vw;
+    overflow: hidden;
+
+    position: relative;
+    z-index: 5;
+}
+
+.phone #home-page .green-circle{
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(3rem);
+    width: 18rem;
+    height: 18rem;
+    background-color: var(--main-green-color);
+    opacity: 0.45;
+    z-index: 1;
+}
+
+.phone #home-page #bottom .green-circle{
+    bottom:0rem;
+    left: 2rem;
+
+    offset-path: path("M 0 0 C 50 -60, 100 -60, 150 0 C 200 60, 250 60, 300 0 C 250 -60, 200 -60, 150 0 C 100 60, 50 60, 0 0");
+
+    transform: rotate(45deg);
+    transform-origin: center;
+
+    animation-name: infinity;
+    animation-duration: 15s;
+    animation-delay: 500ms;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.phone #home-page #top .green-circle{
+    bottom:0%;
+    right:30%;
+
+    offset-path: path("M 0 0 C 50 -60, 100 -60, 150 0 C 200 60, 250 60, 300 0 C 250 -60, 200 -60, 150 0 C 100 60, 50 60, 0 0");
+
+    animation-name: infinity;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+
+@keyframes infinity {
+    to {
+        offset-distance: 100%;
+    }
+}
