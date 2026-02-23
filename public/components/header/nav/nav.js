@@ -1,4 +1,5 @@
-import { updateCurrentMainPage, updateSummaryPagePos } from "../../../pages/mainPage/structure.js";
+import { updateSummaryPagePos } from "../../../pages/mainPage/structure.js";
+import { updateCurrentMainPage } from "../../../pages/mainPage/sharedStructure.js";
 
 export function renderNav(parent){
     parent.innerHTML = `<div id="nav-items">
