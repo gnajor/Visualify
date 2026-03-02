@@ -1,8 +1,7 @@
-export function updateCurrentMainPage(width, height, pageIndex){
-    const main = document.querySelector("main");
-    main.style.transform = `translate(${width}, ${height})`;
+import { updateSwitchMarker } from "../../components/header/switch/switch.js";
 
-    const switchInstance = Switch.getCurrentSwitchById(pageIndex);
-    
-    if(switchInstance)Switch.updateSwitch(switchInstance);
+export function updateCurrentMainPage(width, height){
+    const main = document.querySelector("main");
+    main.style.transform = `translate(${width}, ${height})`;    
+    updateSwitchMarker();
 }

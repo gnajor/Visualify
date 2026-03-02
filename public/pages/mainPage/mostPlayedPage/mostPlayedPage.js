@@ -1,8 +1,6 @@
 import { onSelectorChange, getSelectorValue } from "../../../components/header/selector/selector.js";
-import { Switch } from "../../../components/header/switch/switch.js";
+import { getSwitchState, onSwitchChange } from "../../../components/header/switch/switch.js";
 import { getMostPlayedData } from "../../../logic/utils.js";
-import { formatSongs } from "../../../logic/utils.js";
-import { DonutChart } from "../../../components/donutChart/donutChart.js";
 import { renderDataDetails } from "./shared.js";
 
 export function renderMostPlayedPage(parent){
@@ -16,18 +14,17 @@ export function renderMostPlayedPage(parent){
     parent.appendChild(dataDetailsContainer);
     parent.appendChild(diagramContainer);
 
-    const switchInstance = Switch.getSwitchByPageId(parent.id);
-    const spiral = new Spiral(`${parentId} .${diagramContainer.className}`, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
-    renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
+    const spiral = new Spiral(`${parentId} .${diagramContainer.className}`, dataset[getSwitchState()][getSelectorValue()]);
+    renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
 
-    switchInstance.event(() => {
-        spiral.changeData(dataset[switchInstance.currentSwitchState][getSelectorValue()]);
-        renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][getSelectorValue()]);
+    onSwitchChange(() => {
+        spiral.changeData(dataset[getSwitchState()][getSelectorValue()]);
+        renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
     });
 
     onSelectorChange((event) => {
-        spiral.changeData(dataset[switchInstance.currentSwitchState][event.target.value]);
-        renderDataDetails(dataDetailsContainer, dataset[switchInstance.currentSwitchState][event.target.value]);
+        spiral.changeData(dataset[getSwitchState()][event.target.value]);
+        renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][event.target.value]);
     }); 
 }
 

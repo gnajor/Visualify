@@ -224,7 +224,7 @@ Phone Version
 
 .phone #home-page .circle-border{
     width: 120vw;
-    height: 120vw;
+    height: 120%;
     overflow: hidden;
 
     position: relative;
