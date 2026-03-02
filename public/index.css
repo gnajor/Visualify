@@ -37,6 +37,7 @@ body{
     background-color: #251741;
     font-family: sans-serif;
     overflow: hidden;
+    min-height: 100dvh;
 }
 
 html:has(#wrapper.phone) body:before{
@@ -115,9 +116,9 @@ section#summary-page{
     gap:1rem;
 }
 
-#wrapper.phone{
+#wrapper{
     overflow: hidden;
-    height: 100dvh;
+    height: 100%;
 }
 
 .phone section{

@@ -1,7 +1,7 @@
 import { Logo } from "../logo/logo.js";
 import { renderNav } from "./nav/nav.js";
 import { renderSelector } from "./selector/selector.js";
-import { Switch } from "./switch/switch.js";
+import { renderSwitch } from "./switch/switch.js";
 
 export function renderHeader(parent, pageDoms){
     parent.innerHTML = `<div id="logo"></div>
@@ -27,17 +27,5 @@ export function renderHeader(parent, pageDoms){
     propertiesContainer.style.height = height;
 
     renderSelector(selectContainer);
-
-    pageDoms.forEach((page, i) => {
-        let switchCounter = 0;
-        
-        if(page.className === "switch-button-needed"){
-            const switchInstance = new Switch(switchContainer, page.id, i);  
-            
-            if(switchCounter === 0){
-                switchCounter++;
-                switchInstance.element.classList.add("current");
-            }
-        } 
-    });
+    renderSwitch(switchContainer);
 }

@@ -169,8 +169,8 @@ Desktop
     justify-content: space-between;
     align-items: center;
     position: relative;
-    opacity: 0;
     transition: opacity ease-in-out 300ms;
+    cursor: pointer;
 }
 
 .desktop header .switch > div{
@@ -185,11 +185,6 @@ Desktop
 
 .desktop header .switch div:first-child{margin-left: 0.5em;}
 .desktop header .switch div:nth-child(2){margin-right: 0.5em;}
-
-.desktop header .switch.current{
-    opacity: 1;
-    cursor: pointer;
-}
 
 .desktop header .switch #switch-marker{
     position: absolute;

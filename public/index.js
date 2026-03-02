@@ -1,6 +1,6 @@
 import { apiCom } from "./apiCom/apiCom.js";
 import { updateNavMarker } from "./components/header/nav/nav.js";
-import { Switch } from "./components/header/switch/switch.js";
+import { updateSwitchMarker } from "./components/header/switch/switch.js";
 import { handleRedirect } from "./logic/handleRedirect.js";
 import { getAllTopUserDataAndSetState, setStateToServer } from "./logic/utils.js";
 import { renderHomePage } from "./pages/homePage/homePage.js";
@@ -98,37 +98,89 @@ export const State = {
 const app = {
     parent: document.querySelector("#wrapper"),
     resizeTimer: undefined,
+    currentVersion: undefined,
+    isLoggedIn: false,
+
 
     async start(){
         const isTokenCorrect = await apiCom("token:auth");
+        window.onresize = app.onResizeWindow;
 
         if(!isTokenCorrect.ok){
             const handled = await handleRedirect();
-            this.parent.classList.add("phone");
-            renderPhoneHomePage(this.parent);
-            //window.onresize = app.onResizeWindow;
-            //renderHomePage(this.parent);   
-            //this.parent.classList.add("desktop");
+
+            if(this.isPhone()){
+                this.startPhoneHomePage();
+            }
+            else{
+                this.startDesktopHomePage();
+            }
         }
         else{
-            this.parent.classList.add("phone");
+            this.isLoggedIn = true;
             await getAllTopUserDataAndSetState();
             setStateToServer();
-            /* renderStructure(this.parent); */
-            renderPhoneStructure(this.parent);
+
+            if(this.isPhone()){
+                this.startPhoneVersion();
+            }
+            else{
+                this.startDesktopVersion();
+            }
         }
     },
 
+    startPhoneHomePage(){
+        this.currentVersion = "phone";
+        this.parent.className = "phone";
+        renderPhoneHomePage(this.parent);
+    },
+
+    startDesktopHomePage(){
+        this.currentVersion = "desktop";
+        this.parent.className = "desktop";
+        renderHomePage(this.parent);   
+    },
+
+    startPhoneVersion(){
+        this.currentVersion = "phone";
+        this.parent.className = "phone";
+        renderPhoneStructure(this.parent);
+    },
+
+    startDesktopVersion(){
+        this.currentVersion = "desktop";
+        this.parent.className = "desktop";
+        renderStructure(this.parent);
+    },
+
     onResizeWindow(){
+        const nowPhone = app.isPhone();
+
+        if(nowPhone && app.currentVersion === "desktop"){
+            if(app.isLoggedIn) app.startPhoneVersion();
+            else app.startPhoneHomePage();
+        }
+        else if(!nowPhone && app.currentVersion === "phone"){
+            if(app.isLoggedIn) app.startDesktopVersion();
+            else app.startDesktopHomePage();
+        }
+
+        if(!nowPhone && app.currentVersion === "desktop"){
+            updateSwitchMarker();
+            updateNavMarker();
+            updateArtistDivPosition();
+        }
+
         document.body.classList.add("no-transition");
-        clearTimeout(this.resizeTimer);
-        this.resizeTimer = setTimeout(() => {
+        clearTimeout(app.resizeTimer);
+        app.resizeTimer = setTimeout(() => {
             document.body.classList.remove("no-transition");
         }, 200);
+    },
 
-        Switch.updateSwitchMarker();
-        updateNavMarker();
-        updateArtistDivPosition();
+    isPhone() {
+        return window.innerWidth <= 450;
     }
 }
 
