@@ -1,23 +1,32 @@
 import { onSelectorChange, getSelectorValue } from "../../../components/header/selector/selector.js";
+import { getSwitchState, onSwitchChange, renderSwitch } from "../../../components/header/switch/switch.js";
 import { getMostPlayedData } from "../../../logic/utils.js";
 import { renderDataDetails } from "./shared.js";
 
 export function renderPhoneMostPlayedPage(parent){
     const dataset = getMostPlayedData();
 
-    const dataDetailsContainer = document.createElement("div");
     const diagramContainer = document.createElement("div");
-    dataDetailsContainer.id = "data-details-container";
+    const switchContainer = document.createElement("div");
+    const dataDetailsContainer = document.createElement("div");
     diagramContainer.className = "diagram-container";
+    switchContainer.id = "switch-container";
+    dataDetailsContainer.id = "data-details-container";
     parent.appendChild(diagramContainer);
+    parent.appendChild(switchContainer);
     parent.appendChild(dataDetailsContainer);
+    renderSwitch(switchContainer);
+    renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
+    renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
 
-    renderDataDetails(dataDetailsContainer, dataset["tracks"][getSelectorValue()]);
-    renderGrid(diagramContainer, dataset["tracks"][getSelectorValue()]);
+    onSwitchChange(() => {
+        renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
+        renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
+    });
 
     onSelectorChange((event) => {
-        renderDataDetails(dataDetailsContainer, dataset["tracks"][getSelectorValue()]);
-        renderGrid(diagramContainer, dataset["tracks"][getSelectorValue()]);
+        renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
+        renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
     });
 }
 
@@ -47,6 +56,23 @@ function renderGrid(parent, dataset){
             detailsItem.classList.add("show");
         });
     });
+
+    if(dataset.length != 24){
+        renderRestOfGridDefault(parent, 24 - dataset.length);
+    }
+}
+
+function renderRestOfGridDefault(parent, count){
+    for(let i = 0; i < count; i++){
+        const itemDom = document.createElement("div");
+        itemDom.className = "item default";
+        itemDom.style.animationDelay = `${((24 - count) + i) * 40}ms`;
+        parent.appendChild(itemDom);
+
+        const img = document.createElement("img");
+        img.setAttribute("src", "../../../media/icons/not-found-square.svg");
+        itemDom.appendChild(img);
+    }
 }
 
 

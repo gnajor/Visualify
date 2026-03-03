@@ -111,7 +111,7 @@ Phone
 }
 
 .phone #most-played-page #data-details-container{
-    height: 20%;
+    height: 15%;
     position: relative;
     margin:0 1.5rem;
 }
@@ -144,6 +144,65 @@ Phone
 
 .phone #most-played-page .donut-chart text{
     font-size: 2.5rem;
+}
+
+.phone #most-played-page #switch-container{
+    display: flex;
+    justify-content: right;
+    margin:0 1.25rem;
+}
+
+.phone #most-played-page .switch{
+    border-radius: 4em;
+    display: flex;
+    height: 3rem;
+    width: 6rem;
+    margin-top:1.5rem;
+
+    background-color: var(--menu-black-color);
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    transition: opacity ease-in-out 300ms;
+    cursor: pointer;
+}
+
+.phone #most-played-page .switch > div{
+    border-radius: 4em;
+    width: 2.5rem;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 0;
+}
+
+.phone #most-played-page .switch div:first-child{margin-left: 0.5em;}
+.phone #most-played-page .switch div:nth-child(2){margin-right: 0.5em;}
+
+.phone #most-played-page .switch #switch-marker{
+    position: absolute;
+    border-radius: 4em;
+    background-color: var(--main-green-color);
+    z-index: 1;
+    transition: 400ms all ease-in-out;
+}
+
+.phone #most-played-page .switch img{
+    line-height: 0;
+    height: 1em;
+    position: relative;
+    transition: 400ms all ease-in-out;
+    z-index: 2;
+    filter: brightness(0.6);
+}
+
+.phone #most-played-page .switch > div.marked img{
+    filter: brightness(0);
+}
+
+.phone #most-played-page .item.default{
+    object-fit: cover;
 }
 
 @keyframes popIn {

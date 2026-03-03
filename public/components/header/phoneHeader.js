@@ -17,6 +17,12 @@ export function renderPhoneHeader(parent, pageDoms){
     const logoParent = parent.querySelector("#logo");
     const navContainer = parent.querySelector("nav");
     const selectContainer = parent.querySelector("#selector-container");
+    const menuButton = parent.querySelector("#menu-button");
+
+    menuButton.addEventListener("click", () => {
+        if(navContainer.className === "active")navContainer.className = "";
+        else navContainer.className = "active";
+    });
 
     const width = "9rem";
     const height = "100%";

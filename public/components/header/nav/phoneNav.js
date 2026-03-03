@@ -7,6 +7,7 @@ export function renderPhoneNav(parent){
                             <div class="nav-item">Genres</div>
                             <div class="nav-item">Moods</div>
                             <div class="nav-item">Map</div>
+                            <div class="nav-item">Overview</div>
                         </div>`;
     
     const navItems = parent.querySelectorAll(".nav-item");
@@ -16,6 +17,7 @@ export function renderPhoneNav(parent){
         element.addEventListener("click", () => {
             currentPageId = i;
             updateCurrentMainPage(`${- currentPageId * 100}vw`, 0, currentPageId);
+            parent.className = "";
         });
     });
 }

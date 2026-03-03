@@ -118,11 +118,12 @@ section#summary-page{
 
 #wrapper{
     overflow: hidden;
-    height: 100%;
+    height: 100dvh;
 }
 
 .phone section{
     height: calc(100dvh - 15rem);
+    margin-top: 15rem;
 }
 
 

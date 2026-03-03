@@ -218,20 +218,21 @@ Phone
 .phone header{
     height: 5rem;
     background-color: var(--menu-black-color);
-    border-radius: 4rem;
+    border-radius: 2.5rem;
     padding:1.1rem 1.8rem;
-    margin: 5rem 2rem 5rem 2rem;
+    top: 5rem;
+    margin: 0 2rem;
+    width: calc(100% - 4rem);
+    position: absolute;
+    z-index: 2;
+    transition: height 350ms ease-in-out;
 }
 
 .phone header #header-main{
     display: flex;
     align-items: center;
     gap:2rem;
-    height: 100%;
-}
-
-.phone header nav{
-    display: none;
+    height: 2.8rem;
 }
 
 .phone header #menu-button div{
@@ -265,4 +266,44 @@ Phone
 .phone header #logo{
     position: relative;
     bottom: -3px;
+}
+
+.phone header nav #nav-items{
+    display: flex;
+    flex-direction: column;
+    gap:2rem;
+    padding:2.5rem 0;
+    transition: all 350ms ease-in-out;
+    width: 0%;
+}
+
+.phone header nav{
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 350ms ease-in-out;
+}
+
+.phone header nav .nav-item{
+    color: var(--lilac);
+    font-size: 1.6rem;
+    font-weight: bold;
+    width: max-content;
+    opacity: 0;
+    transition: all 350ms linear;
+}
+
+.phone header:has(nav.active){
+    height: 31rem;
+}
+
+.phone header nav.active{
+    transform: scaleY(1);
+}
+
+.phone header nav.active #nav-items{
+    height: 100%;
+}
+
+.phone header nav.active .nav-item{
+    opacity: 1;
 }
