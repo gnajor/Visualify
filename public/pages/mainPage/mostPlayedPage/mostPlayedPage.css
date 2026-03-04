@@ -87,10 +87,6 @@ Phone
 --------------------
 */
 
-.phone #most-played-page{
-    padding:0 2rem;
-}
-
 .phone #most-played-page #data-details-container .item-details{
     bottom: 0;
     left: 0;

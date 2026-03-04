@@ -1,11 +1,12 @@
 import { renderPhoneHeader } from "../../components/header/phoneHeader.js";
 import { renderPhoneMostPlayedPage } from "./mostPlayedPage/phoneMostPlayedPage.js";
+import { renderPhoneDecadePage } from "./decadesPage/phoneDecadePage.js";
 
 export function renderPhoneStructure(parent){
     parent.innerHTML = `<header></header>
                         <main>
-                            <section id="most-played-page" class="switch-button-needed"></section>
                             <section id="decades-page"></section>
+                            <section id="most-played-page" class="switch-button-needed"></section>
                             <section id="genre-page"></section>
                             <section id="moods-page"></section>
                             <section id="music-map-page"></section>
@@ -24,6 +25,7 @@ export function renderPhoneStructure(parent){
     const pageDoms = parent.querySelectorAll("section");
     renderPhoneHeader(header, pageDoms);
     renderPhoneMostPlayedPage(mostPlayedPage);
+    renderPhoneDecadePage(decadePage);
 
 /*     renderDecadePage(decadePage);
     renderMostPlayedPage(mostPlayedPage);

@@ -124,6 +124,7 @@ section#summary-page{
 .phone section{
     height: calc(100dvh - 15rem);
     margin-top: 15rem;
+    padding:0 2rem;
 }
 
 
