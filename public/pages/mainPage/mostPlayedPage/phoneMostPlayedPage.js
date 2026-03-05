@@ -45,13 +45,23 @@ function renderGrid(parent, dataset){
         itemDom.appendChild(img);
 
         itemDom.addEventListener("click", (event) => {
+            if(event.currentTarget.className.includes("focus")){
+                document.querySelectorAll("#most-played-page .item").forEach(item => { 
+                    item.classList.remove("gray");
+                    item.classList.remove("focus");
+
+                    const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
+                    detailsItem.classList.remove("show");
+                });
+            }
+
             document.querySelectorAll("#most-played-page .item-details").forEach(item => item.classList.remove("show"));
             document.querySelectorAll("#most-played-page .item").forEach(item => { 
                 item.classList.add("gray");
                 item.classList.remove("focus")
             });
-            event.currentTarget.classList.add("focus");
 
+            event.currentTarget.classList.add("focus");
             const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
             detailsItem.classList.add("show");
         });
