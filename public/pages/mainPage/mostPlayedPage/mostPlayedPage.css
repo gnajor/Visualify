@@ -118,8 +118,8 @@ Phone
     filter: grayscale(0) brightness(1);
     transition: 300ms all ease-in-out;
     cursor: pointer;
-    width: 6.125rem;
-    height: 6.125rem;
+    width: 6.15rem;
+    height: 6.15rem;
     animation: popIn 0.3s ease-out both;
 }
 
