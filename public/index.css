@@ -153,9 +153,13 @@ section#summary-page{
     }
 }
 
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 380px) {
     :root{
-        font-size: 10px;
+        font-size: 9px;
+    }
+
+    #most-played-page .diagram-container{
+        grid-template-columns: 6.4rem 6.4rem 6.4rem 6.4rem;
     }
 }
 
