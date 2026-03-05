@@ -20,7 +20,9 @@
 #most-played-page #data-details-container .item-details{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    
     position: absolute;
     bottom: 3rem;
     left:3rem;
@@ -93,10 +95,10 @@ Phone
 }
 
 .phone #most-played-page .diagram-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
-    margin: 0 1.25rem;
+    margin: 0 1.5rem;
 }
 
 .phone #most-played-page .diagram-container img{
@@ -116,8 +118,8 @@ Phone
     filter: grayscale(0) brightness(1);
     transition: 300ms all ease-in-out;
     cursor: pointer;
-    width: 6.5rem;
-    height: 6.5rem;
+    width: 6rem;
+    height: 6rem;
     animation: popIn 0.3s ease-out both;
 }
 
