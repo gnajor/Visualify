@@ -40,7 +40,7 @@ body{
     min-height: 100dvh;
 }
 
-html:has(#wrapper.phone) body:before{
+html:has(#wrapper.phone) body::before{
     content: "";
     position: fixed;
     inset: 0;
@@ -74,6 +74,15 @@ main{
     width: 500vw;
 
     transition: transform 400ms linear;
+}
+
+.phone main::before{
+    content: "";
+    width: 100vw;
+    height: 100dvh;
+    position: fixed;
+    background-color: red;
+    opacity: 0.5;
 }
 
 .no-transition main {
