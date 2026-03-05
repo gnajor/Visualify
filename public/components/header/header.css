@@ -220,7 +220,7 @@ Phone
     background-color: var(--menu-black-color);
     border-radius: 2.5rem;
     padding:1.1rem 1.8rem;
-    top: 5rem;
+    top: 3rem;
     margin: 0 2rem;
     width: calc(100% - 4rem);
     position: absolute;
