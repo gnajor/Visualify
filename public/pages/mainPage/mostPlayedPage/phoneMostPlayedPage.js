@@ -45,15 +45,26 @@ function renderGrid(parent, dataset){
         itemDom.appendChild(img);
 
         itemDom.addEventListener("click", (event) => {
-            document.querySelectorAll("#most-played-page .item-details").forEach(item => item.classList.remove("show"));
-            document.querySelectorAll("#most-played-page .item").forEach(item => { 
-                item.classList.add("gray");
-                item.classList.remove("focus")
-            });
-            event.currentTarget.classList.add("focus");
+            if(event.currentTarget.className.includes("focus")){
+                document.querySelectorAll("#most-played-page .item").forEach(element => { 
+                    element.classList.remove("gray");
+                    element.classList.remove("focus");
 
-            const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
-            detailsItem.classList.add("show");
+                    const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
+                    detailsItem.classList.remove("show");
+                });
+            }
+            else{
+                document.querySelectorAll("#most-played-page .item-details").forEach(element => element.classList.remove("show"));
+                document.querySelectorAll("#most-played-page .item").forEach(element => { 
+                    element.classList.add("gray");
+                    element.classList.remove("focus")
+                });
+
+                event.currentTarget.classList.add("focus");
+                const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
+                detailsItem.classList.add("show");
+            }
         });
     });
 

@@ -40,7 +40,7 @@ body{
     min-height: 100dvh;
 }
 
-html:has(#wrapper.phone) body:before{
+html:has(#wrapper.phone) body::before{
     content: "";
     position: fixed;
     inset: 0;
@@ -122,8 +122,8 @@ section#summary-page{
 }
 
 .phone section{
-    height: calc(100dvh - 15rem);
-    margin-top: 15rem;
+    height: calc(100dvh - 13rem);
+    margin-top: 13rem;
     padding:0 2rem;
 }
 
@@ -150,6 +150,12 @@ section#summary-page{
 @media only screen and (max-width: 450px) {
     :root{
         font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    :root{
+        font-size: 10px;
     }
 }
 
