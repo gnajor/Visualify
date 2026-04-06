@@ -26,3 +26,27 @@
 #moods-page .radarCircles{
     fill: #D2AFFF;
 }
+
+.phone #moods-page .diagram-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.phone #moods-page .diagram-container div{
+    display: flex;
+    width: 100%;
+}
+
+.phone #moods-page .diagram-container .column-container{
+    display: flex;
+    gap:1rem;
+    height:2rem;
+    width: 100%;
+}
+
+.phone #moods-page .diagram-container .column-container .bar{
+    flex-basis: 0;
+    flex-grow: 1;
+    background-color: #D2AFFF;
+    height: 100%;
+}

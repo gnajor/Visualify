@@ -173,6 +173,11 @@ Desktop
     cursor: pointer;
 }
 
+.desktop header .switch.none{
+    opacity: 0;
+    pointer-events: none;
+}
+
 .desktop header .switch > div{
     border-radius: 4em;
     width: 2.5rem;

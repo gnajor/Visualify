@@ -1,6 +1,7 @@
 import { renderPhoneHeader } from "../../components/header/phoneHeader.js";
 import { renderPhoneMostPlayedPage } from "./mostPlayedPage/phoneMostPlayedPage.js";
 import { renderPhoneDecadePage } from "./decadesPage/phoneDecadePage.js";
+import { renderPhoneMoodPage } from "./moodsPage/phoneMoodPage.js";
 
 export function renderPhoneStructure(parent){
     parent.innerHTML = `<header></header>
@@ -26,6 +27,7 @@ export function renderPhoneStructure(parent){
     renderPhoneHeader(header, pageDoms);
     renderPhoneMostPlayedPage(mostPlayedPage);
     renderPhoneDecadePage(decadePage);
+    renderPhoneMoodPage(moodsPage);
 
 /*     renderDecadePage(decadePage);
     renderMostPlayedPage(mostPlayedPage);

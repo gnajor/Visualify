@@ -12,10 +12,11 @@
     filter: grayscale(0.7) brightness(0.5);
 }
 
-#most-played-page #data-details-container .item-details.show{
+#most-played-page #data-details-container > div.show{
     opacity: 1;
     z-index: 1;
 }
+
 
 #most-played-page #data-details-container .item-details{
     display: flex;
@@ -94,6 +95,34 @@ Phone
     left: 0;
 }
 
+.phone #most-played-page #average-popularity{
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap:1rem;
+    position: relative;
+    z-index: 5;
+    transition: 200ms all ease-in-out;
+}
+
+.phone #most-played-page #average-popularity .donut-chart{
+    width: 5rem;
+    height: 5rem;
+}
+
+.phone #most-played-page #average-popularity text{
+    font-size: 3rem;
+    fill: var(--lightest-grey);
+}
+
+.phone #most-played-page #average-popularity h2{
+    font-size: 1.7rem;
+    color: var(--light-grey);
+    font-style: normal;
+}
+
 .phone #most-played-page .diagram-container{
     display: grid;
     grid-template-columns: repeat(4, 6.1rem);
@@ -110,7 +139,7 @@ Phone
 }
 
 .phone #most-played-page #data-details-container{
-    height: 15%;
+    height: 12%;
     position: relative;
     margin:0 1.5rem;
 }

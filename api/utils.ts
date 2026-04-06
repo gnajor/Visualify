@@ -45,7 +45,7 @@ export async function getSongsFeatures(songs: Array<any>): Promise<any | null>{
         throw new Error("API key is missing");
     }
 
-    const instructions = `I want you to analyze the overall mood/feel of these songs one by one. Choose the top 2 categories from this list that best describe each song: Happy, Sad, Energy, Calm, Intense. Do NOT invent new categories. Return ONLY valid JSON in one line, formatted like this: [{"track": "Song Title 1", "artist": "Artist Name", "moods": ["Mood1","Mood2"]}] Do not add any extra text, comments, or line breaks.`;
+    const instructions = `I want you to analyze the overall mood/feel of these songs one by one. Choose the top 2 categories from this list that best describe each song: Happy, Sad, Energy, Calm, Intense. Do NOT invent new categories. Ensure the JSON is syntactically valid and can be parsed by a standard JSON parser, formatted like this: [{"track": "Song Title 1", "artist": "Artist Name", "moods": ["Mood1","Mood2"]}] Do not add any extra text, comments, or line breaks.`;
     let songsStr = "The songs and artists: ";
 
     //console.log(songs);
@@ -61,7 +61,7 @@ export async function getSongsFeatures(songs: Array<any>): Promise<any | null>{
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            model: "llama-3.3-70b",
+            model: "qwen-3-235b-a22b-instruct-2507",
             messages: [
                 { role: "user", content: instructions + songsStr},
             ],
@@ -72,6 +72,7 @@ export async function getSongsFeatures(songs: Array<any>): Promise<any | null>{
     });
 
     const data = await response.json();
+    console.log(data);
 
     if(!data?.choices?.[0]?.message?.content){
         return null;

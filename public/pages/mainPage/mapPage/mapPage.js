@@ -38,17 +38,17 @@ export function renderMapPage(parent){
         const range = event.detail.range;
 
         dataset.forEach((item) => {
-            const foundElement = findArray(songContainer.childNodes, (element) => element.className.includes(item.country));
+            const foundElement = findArray(songContainer.childNodes, (element) => element.querySelector(".artist-name") === item.name);
 
-            if (foundElement) {
+            if(foundElement){
                 foundElement.classList.add("box-" + item.country + "-" + range);
-            } else {
+            }
+            else{
                 renderArtistsDiv(item, range);
             }
         });
     });
 
-    // Initialize map
     createMap(diagramContainer, dataset, "short_term", unMarkArtistDivs);
 }
 
@@ -118,10 +118,12 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
         const exists = state.existingData[state.range].find(item => item.country === country);
         let newCountry = null;
 
-        if (exists) {
+        if(exists){
             exists.value++;
             newCountry = exists;
-        } else {
+        } 
+
+        else{
             newCountry = {
                 "image": artist.image,
                 "country": formatCountryName(country),
@@ -130,16 +132,15 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
             };
             state.existingData[state.range].push(newCountry);
         }
-
         updateCountryColor(newCountry);
     }
 
     async function fetchAndSetColors(){
-        for (const artist of state.dataset){
+        for(const artist of state.dataset){
             const artistObj = state.existingServerData.find(item => item.id === artist.id);
 
-            if (artistObj !== undefined) {
-                if (artistObj.country !== null) {
+            if(artistObj !== undefined){
+                if(artistObj.country !== null){
                     formatArtistCountryItem(artistObj.country, artist);
                 }
                 continue;
@@ -195,6 +196,8 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
     function bindListeners(){
         state.svg.selectAll(".country").on("click", (event, d) => {
             const range = state.range;
+            state.svg.selectAll(".country").classed("pressed", false);
+
 
             unMarkArtistDivs();
             d3.select(event.currentTarget).classed("pressed", true);
@@ -202,6 +205,7 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
             const className = `.box-${formatCountryName(d.properties.name)}-${range}`;
             d3.select(className).classed("show", true);
         });
+
     }
 
     function done(){
@@ -235,7 +239,8 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
         state.svg.selectAll("path")
             .attr('fill', '#383141')
             .attr("stroke", "black")
-            .classed("done", false);
+            .classed("done", false)
+            /* .data([]) */
 
         if(state.existingData[state.range].length !== 0) {
             setColorsFromMemory();
@@ -271,6 +276,8 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
     onSelectorChange((event) => {
         changeData(event.target.value);
         unMarkArtistDivs();
+
+        state.svg.select(".pressed").classed("pressed", false)
     });
 
     init();

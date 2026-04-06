@@ -141,7 +141,6 @@ export async function handleRequests(request: Request): Promise<Response>{
     if(pathname === "/api/songs-features" && request.method === "POST"){
         const data = await request.json();
         const moodSongData = await getSongsFeatures(data); 
-        console.log(moodSongData);
 
         insertMoods(moodSongData);
         return new Response(JSON.stringify(moodSongData), {status: 200});

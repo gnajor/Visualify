@@ -1,10 +1,13 @@
 import { onSelectorChange, getSelectorValue } from "../../../components/header/selector/selector.js";
 import { getSwitchState, onSwitchChange, renderSwitch } from "../../../components/header/switch/switch.js";
 import { getMostPlayedData } from "../../../logic/utils.js";
+import { DonutChart } from "../../../components/donutChart/donutChart.js";
 import { renderDataDetails } from "./shared.js";
 
 export function renderPhoneMostPlayedPage(parent){
     const dataset = getMostPlayedData();
+
+    console.log(dataset);
 
     const diagramContainer = document.createElement("div");
     const switchContainer = document.createElement("div");
@@ -15,19 +18,60 @@ export function renderPhoneMostPlayedPage(parent){
     parent.appendChild(diagramContainer);
     parent.appendChild(switchContainer);
     parent.appendChild(dataDetailsContainer);
+
     renderSwitch(switchContainer);
     renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
     renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
+    renderAverageData(
+        dataDetailsContainer, 
+        dataset[getSwitchState()][getSelectorValue()], 
+        "Average Artist Popularity"            
+    );
 
     onSwitchChange(() => {
         renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
         renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
+        renderAverageData(
+            dataDetailsContainer, 
+            dataset[getSwitchState()][getSelectorValue()], 
+            getSwitchState === "tracks" ? "Average Song Popularity" : "Average Artist Popularity"            
+        );
     });
 
     onSelectorChange((event) => {
         renderDataDetails(dataDetailsContainer, dataset[getSwitchState()][getSelectorValue()]);
         renderGrid(diagramContainer, dataset[getSwitchState()][getSelectorValue()]);
+        renderAverageData(
+            dataDetailsContainer, 
+            dataset[getSwitchState()][getSelectorValue()], 
+            getSwitchState === "tracks" ? "Average Song Popularity" : "Average Artist Popularity"            
+        );
     });
+}
+
+function renderAverageData(parent, data, title){
+    const avgContainer = document.createElement("div");
+    parent.appendChild(avgContainer);
+    avgContainer.id = "average-popularity";
+    avgContainer.className = "show";
+
+    const popularityArr = data.map(item => item.popularity); 
+    const avgPopularity = Math.round(d3.mean(popularityArr));
+
+    const newDataset = [
+        {label: "filled", value: avgPopularity},
+        {label: "empty", value: 100 - avgPopularity} 
+    ];
+
+    avgContainer.innerHTML += `<div class="donut-chart"></div>
+                               <h2>${title}</h2>`;
+    
+    new DonutChart(
+        avgContainer.querySelector(".donut-chart"), 
+        newDataset, ["var(--main-green-color)", "gray"], 
+        100, 
+        100
+    );
 }
 
 function renderGrid(parent, dataset){
@@ -46,17 +90,18 @@ function renderGrid(parent, dataset){
 
         itemDom.addEventListener("click", (event) => {
             if(event.currentTarget.className.includes("focus")){
-                document.querySelectorAll("#most-played-page .item").forEach(element => { 
+                parent.querySelectorAll(".item").forEach(element => { 
                     element.classList.remove("gray");
                     element.classList.remove("focus");
 
                     const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
                     detailsItem.classList.remove("show");
                 });
+                document.querySelector("#most-played-page #average-popularity").classList.add("show");
             }
             else{
                 document.querySelectorAll("#most-played-page .item-details").forEach(element => element.classList.remove("show"));
-                document.querySelectorAll("#most-played-page .item").forEach(element => { 
+                parent.querySelectorAll(".item").forEach(element => { 
                     element.classList.add("gray");
                     element.classList.remove("focus")
                 });
@@ -64,6 +109,7 @@ function renderGrid(parent, dataset){
                 event.currentTarget.classList.add("focus");
                 const detailsItem = document.querySelector("#most-played-page #item-" + item.ranking);
                 detailsItem.classList.add("show");
+                document.querySelector("#average-popularity").classList.remove("show");
             }
         });
     });

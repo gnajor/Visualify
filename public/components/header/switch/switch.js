@@ -2,6 +2,7 @@ import { updateMarker } from "../nav/nav.js";
 
 let switchElement = null;
 let currentSwitchState = "artists";
+
 const cwdImg = "../../../media/icons/";
 
 export function renderSwitch(parent) {
@@ -45,3 +46,7 @@ export function updateSwitchMarker() {
     const marker = switchElement.querySelector("#switch-marker");
     updateMarker(marked, switchElement, marker);
 }
+
+export function displaySwitch(){switchElement.classList.remove("none");}
+export function displayNoneSwitch(){switchElement.classList.add("none");}
+

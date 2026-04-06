@@ -54,3 +54,19 @@
     color: var(--white);
     font-style: italic;
 }
+
+#music-map-page path {
+    transition: all 0.5s ease;
+}
+
+#music-map-page path.country.done{
+    cursor: pointer;
+}
+
+#music-map-page path.country.done.pressed{
+    fill: #1ed75f;
+}
+
+#music-map-page svg:has(path.country.done:hover) path:not(.country:hover){
+    filter: blur(0.20rem) brightness(0.75);
+}

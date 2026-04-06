@@ -13,7 +13,7 @@ export function renderPhoneDecadePage(parent){
     parent.appendChild(diagramContainer);
     parent.appendChild(songContainer);
 
-    const circularChart = new CircularBarChart(`${parentId} .${diagramContainer.className}`, dataset["short_term"], 0.15);
+    const circularChart = new CircularBarChart(`${parentId} .${diagramContainer.className}`, dataset["short_term"], 0.17);
     circularChart.bindClickListeners();
 
     onSelectorChange((event) => {

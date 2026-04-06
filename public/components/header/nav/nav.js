@@ -1,5 +1,6 @@
 import { updateSummaryPagePos } from "../../../pages/mainPage/structure.js";
 import { updateCurrentMainPage } from "../../../pages/mainPage/sharedStructure.js";
+import { displayNoneSwitch, displaySwitch } from "../switch/switch.js";
 
 export function renderNav(parent){
     parent.innerHTML = `<div id="nav-items">
@@ -27,6 +28,7 @@ export function renderNav(parent){
         element.id = currentPageId;
         element.addEventListener("click", () => {
             currentPageId = i;
+            currentPageId === 0 ? displaySwitch() : displayNoneSwitch();
             navItems.forEach(element => element.classList.remove("marked"));
             element.classList.add("marked");
             updateNavMarker();
@@ -39,6 +41,7 @@ export function renderNav(parent){
 
     dashboardItem.addEventListener("click", () => {
         dashboardIconChange("add");
+        displayNoneSwitch();
         
         if(document.querySelector("header nav .nav-item.marked")){
             updateCurrentMainPage(`${-currentPageId * 100}vw`, "100vh", currentPageId);

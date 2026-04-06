@@ -2,7 +2,7 @@ import { DonutChart } from "../../../components/donutChart/donutChart.js";
 import { formatSongs } from "../../../logic/utils.js";
 
 export function renderDataDetails(parent, dataset){
-    parent.innerHTML = ``;
+    parent.innerHTML = "";
 
     for(const item of dataset){
         const itemContainer = document.createElement("div");
