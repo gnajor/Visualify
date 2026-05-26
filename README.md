@@ -161,12 +161,6 @@ http://127.0.0.1:8888
 
 # Application Flow
 
-<!-- Architecture or Flow Diagram -->
-
-<!-- Insert system architecture or API flow diagram here -->
-
-![Application Flow](./public/media/flow-diagram.png)
-
 1. User logs in with Spotify.
 2. Spotify OAuth flow authenticates the user.
 3. The frontend requests listening data through the backend API.
@@ -183,7 +177,7 @@ http://127.0.0.1:8888
 
 | Desktop View                                | Mobile View                               |
 | ------------------------------------------- | ----------------------------------------- |
-| ![Desktop](./public/media/desktop-view.png) | ![Mobile](./public/media/mobile-view.png) |
+| ![Desktop](./public/assets/screenshots/most_played.png) | ![Mobile](./public/assets/screenshots/phone_most_played.png) |
 
 Visualify automatically switches between desktop and phone layouts based on screen width.
 
