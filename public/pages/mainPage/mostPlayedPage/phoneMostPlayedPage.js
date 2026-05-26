@@ -7,8 +7,6 @@ import { renderDataDetails } from "./shared.js";
 export function renderPhoneMostPlayedPage(parent){
     const dataset = getMostPlayedData();
 
-    console.log(dataset);
-
     const diagramContainer = document.createElement("div");
     const switchContainer = document.createElement("div");
     const dataDetailsContainer = document.createElement("div");

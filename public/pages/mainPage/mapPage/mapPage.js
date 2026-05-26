@@ -4,7 +4,7 @@ import { onSelectorChange } from "../../../components/header/selector/selector.j
 import { State } from "../../../index.js";
 import { findArray } from "../../../logic/utils.js";
 
-export function renderMapPage(parent){
+export function renderMapPage(parent, demo){
     const dataset = getMapData();
     const diagramContainer = document.createElement("div");
     const songContainer = document.createElement("div");
@@ -12,6 +12,8 @@ export function renderMapPage(parent){
     songContainer.className = "song-container";
     parent.appendChild(diagramContainer);
     parent.appendChild(songContainer);
+
+    console.log(dataset)
 
     function renderArtistsDiv(item, range) {
         const artistParent = document.createElement("div");
@@ -49,10 +51,10 @@ export function renderMapPage(parent){
         });
     });
 
-    createMap(diagramContainer, dataset, "short_term", unMarkArtistDivs);
+    createMap(diagramContainer, dataset, "short_term", unMarkArtistDivs, demo);
 }
 
-function createMap(parent, dataset, initialRange, unMarkArtistDivs){
+function createMap(parent, dataset, initialRange, unMarkArtistDivs, demo){
     const state = {
         parent: d3.select(parent),
         range: initialRange,
@@ -136,6 +138,14 @@ function createMap(parent, dataset, initialRange, unMarkArtistDivs){
     }
 
     async function fetchAndSetColors(){
+        if(demo){
+            for(const artist of state.dataset){
+                formatArtistCountryItem(artist.country, artist);
+            }
+            return;
+        }
+
+
         for(const artist of state.dataset){
             const artistObj = state.existingServerData.find(item => item.id === artist.id);
 

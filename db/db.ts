@@ -8,7 +8,7 @@ const supabase = createClient(
     Deno.env.get("SUPABASE_KEY")!,
 );
 
- export async function insertSongsBulk(data: {"song": Song, "album": Album, "artist": Artist}[]): Promise<void>{
+export async function insertSongsBulk(data: {"song": Song, "album": Album, "artist": Artist}[]): Promise<void>{
     if(data.length === 0) return;
 
     const songIds = data.map(item => item.song.id);
@@ -54,6 +54,31 @@ const supabase = createClient(
         .insert(shouldInsertSongs)
 
     if(error) throw error;
+}
+
+export async function getAllData(){
+    const {data, fetchError} = await supabase
+        .from("artist")
+        .select(`
+            *,
+            artist_genres (
+                genre_name
+            ),
+            song (
+                *,
+                song_moods (
+                    mood_type
+                ),
+                album (
+                    *
+                )
+            )
+        `)
+        .not("country", "is", null);
+
+    if(fetchError) throw fetchError;
+
+    return data;
 }
 
 export async function insertAlbums(data: Album[]) {

@@ -1,14 +1,14 @@
 import { getMoodsChartData } from "../../../logic/utils.js";
 import { moodsChartController } from "./shared.js";
 
-export function renderPhoneMoodPage(parent){
+export function renderPhoneMoodPage(parent, demo = false){
     const dataset = getMoodsChartData();
 
     const diagramContainer = document.createElement("div");
     diagramContainer.className = "diagram-container";
     parent.appendChild(diagramContainer);
 
-    const controller = moodsChartController(diagramContainer, dataset, renderMoodGraph);
+    const controller = moodsChartController(diagramContainer, dataset, renderMoodGraph, demo);
     controller.loadRange("short_term");
 
 }

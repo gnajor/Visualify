@@ -35,6 +35,90 @@ export async function getAllTopUserDataAndSetState(){
     }
 }
 
+export async function loadDemoDataAndSetState(){
+    const data = await apiCom("server:get-demo-data");
+
+    const tracks = [];
+    const artists = [];
+
+    const artistSongCount = new Map();
+
+
+    data.forEach(artist => {
+        artistSongCount.set(artist.id, artist.song.length);
+
+        artists.push({
+            id: artist.id,
+            name: artist.name,
+            popularity: artist.popularity,
+            genres: artist.artist_genres.map(g => g.genre_name),
+            images: artist.image ? [{ url: artist.image }] : [],
+            country: artist.country,
+            external_urls: {
+                spotify: artist.link
+            },
+        });
+
+        artist.song.forEach(song => {
+            tracks.push({
+                id: song.id,
+                name: song.title,
+                popularity: song.popularity,
+                explicit: song.explicit,
+                duration_ms: song.duration,
+                artists: [
+                    {
+                        id: artist.id,
+                        name: artist.name
+                    }
+                ],
+                album: {
+                    id: song.album.id,
+                    name: song.album.name,
+                    release_date: `${song?.album?.release_year}-01-01`,
+                    total_tracks: song.album.total_tracks,
+                    images: [
+                        {
+                            url: song.album.image
+                        }
+                    ],
+                    external_urls: {
+                        spotify: song.album.link
+                    }
+                },
+                moods: song.song_moods.map(mood => mood.mood_type),
+                genres: artist.artist_genres.map(genre => genre.genre_name),
+                external_urls: {
+                    spotify: song.link
+                }
+            });
+
+        });
+    });
+
+    artists.sort((a, b) =>
+        (artistSongCount.get(b.id) || 0) - (artistSongCount.get(a.id) || 0)
+    );
+
+    const splitArtists = splitIntoThree(artists);
+    const splitTracks = splitIntoThree(tracks);
+
+    State.userData = {
+        artists: splitArtists,
+        tracks: splitTracks
+    };
+}
+
+function splitIntoThree(arr) {
+    const size = Math.ceil(arr.length / 3);
+
+    return {
+        short_term: arr.slice(0, size),
+        medium_term: arr.slice(size, size * 2),
+        long_term: arr.slice(size * 2)
+    };
+}
+
 export async function setStateToServer(){
     const dataNeeded = {
         artists: [],
@@ -86,15 +170,12 @@ export function getDecadeData(){
         const mostListenedDecade = formatted[timeTerm].toSorted((a, b) => b.amount - a.amount)[0].decade;
         State.setStateOverlayData("mostListenedDecade", timeTerm, mostListenedDecade);
     });
-
-
     return formatted;
 }
 
 export function getMostPlayedData(){
     const ranges = Object.keys(State.userData.artists);
     const formatted = {}
-    const amount = 100;
 
     formatted.artists = {};
     formatted.tracks = {};
@@ -145,10 +226,11 @@ export function getMostPlayedData(){
         State.setStateOverlayData("avgTrackPopularity", range, avgTrackPopularity);
         State.setStateOverlayData("avgArtistPopularity", range, avgArtistPopularity);
 
-        formatted.artists[range].slice(0, amount);
-        formatted.tracks[range].slice(0, amount);
+        if(!State.demoPressed){
+            formatted.artists[range].slice(0, 25);
+            formatted.tracks[range].slice(0, 25);
+        }
     }
-    
     return formatted;
 }
 
@@ -175,11 +257,11 @@ export function getGenreData(){
             });
         }
 
-        const sortedSliced = genres.sort((firstItem, secItem) => secItem.value - firstItem.value).slice(0, 50);
-        State.setStateOverlayData("mostListenedGenre", range, sortedSliced[0].genre);
-        formatted[range] = sortedSliced;
-    }    
+        let result = genres.sort((firstItem, secItem) => secItem.value - firstItem.value);
 
+        State.setStateOverlayData("mostListenedGenre", range, result[0].genre);
+        formatted[range] = result;
+    }    
     return formatted;
 }
 
@@ -188,19 +270,25 @@ export function getMapData(){
     const formatted = {};
 
     for(const range of ranges){
-        const data = [];
+        let data = [];
 
         for(const artist of State.userData.artists[range]){
             const mapData = {
                 "image": artist?.images[0]?.url,
                 "name": artist.name,
                 "link": artist?.external_urls?.spotify,
+                "country": artist?.country,
                 "id": artist.id
             }
 
             data.push(mapData);
         }
-        formatted[range] = data.slice(0, 70);
+
+        if(!State.demoPressed){
+            formatted[range] = data.slice(0, 70);
+        }
+
+        formatted[range] = data;
     }
     
     return formatted;
@@ -212,7 +300,7 @@ export function getMoodsChartData(){
     const formatted = {};
 
     for(const range of ranges){
-        const data = [];
+        let data = [];
 
         for(const track of State.userData.tracks[range]){
             const moodsData = {
@@ -221,9 +309,19 @@ export function getMoodsChartData(){
                 "artist": track.artists[0].name
             }
 
+            if(State.demoPressed){
+                moodsData.moods = track.moods;
+            }
+
             data.push(moodsData);
         }
-        formatted[range] = data.slice(0, 50);
+        
+
+        if(!State.demoPressed){
+            data = data.slice(0, 50);
+        }
+
+        formatted[range] = data;
     }
     return formatted;
 }

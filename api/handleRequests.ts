@@ -1,4 +1,4 @@
-import { getArtistsWithCountryData, insertArtistsBulk, getSongMoodData, updateArtistCountry, insertSongsBulk, insertMoods} from "../db/db.ts";
+import { getArtistsWithCountryData, insertArtistsBulk, getSongMoodData, updateArtistCountry, insertSongsBulk, insertMoods, getAllData} from "../db/db.ts";
 import { authSpotifyUser, formatArtistsData, formatTracksData, getCountryFromMusicBrainz, getCountryFromWikdata, getSongsFeatures, handleLogout, setToken, sleep } from "./utils.ts";
 
 let musicbrainzErrors: number = 0;
@@ -25,6 +25,11 @@ export async function handleRequests(request: Request): Promise<Response>{
         const data = await request.json();
         const artistWithCountry = await getArtistsWithCountryData(data);
         return new Response(JSON.stringify(artistWithCountry), {status: 200});
+    }
+
+    if(pathname === "/api/get-demo-data" && request.method === "GET"){
+        const data = await getAllData();
+        return new Response(JSON.stringify(data), {status: 200});
     }
 
     if(pathname === "/api/get-mood-data" && request.method === "POST"){
@@ -152,7 +157,7 @@ export async function handleRequests(request: Request): Promise<Response>{
         const codeVerifier = data.codeVerifier;
 
         const clientId = "aa99b24e94d448eab167b514b89f2de2";
-        const redirectUri = "https://visualify.deno.dev/"  /* "http://127.0.0.1:8888/" */;
+        const redirectUri = /* "https://visualify.deno.dev/" */  "http://127.0.0.1:8888/";
 
         if(!clientId){
             return new Response(JSON.stringify({error: "client_id does not exist"}), {status: 500});

@@ -10,6 +10,12 @@ export async function apiCom(action, data){
             return resource;
         }
 
+        case "server:get-demo-data": {
+            options.method = "GET";
+            const resource = await fetcher(`/api/get-demo-data`, options);
+            return resource;
+        }
+
         case "server:get-mood-data": {
             options.method = "POST";
             options.body = data;
@@ -71,16 +77,6 @@ export async function apiCom(action, data){
             options.body = data;
             const resource = await fetcher("/api/songs-features", options, true);
             return resource; 
-        }
-
-        case "user:patch-new-image": {
-   /*          options.method = "PATCH";
-            options.body = {
-                userId: encrypt(data.id),
-                imgSrc: encrypt(data.img),
-            }
-            const resource = await fetcher(`../../api/user`, options);
-            return resource */
         }
 
         case "user:logout": {

@@ -2,7 +2,7 @@ import { onSelectorChange } from "../../../components/header/selector/selector.j
 import { getMoodsChartData} from "../../../logic/utils.js";
 import { moodsChartController } from "./shared.js";
 
-export function renderMoodsPage(parent){
+export function renderMoodsPage(parent, demo = false){
     const dataset = getMoodsChartData();
 
     const diagramContainer = document.createElement("div");
@@ -11,7 +11,7 @@ export function renderMoodsPage(parent){
 
 /*     const wordCloud = new WordCloud(diagramContainer, dataset, "short_term"); */
 
-    const controller = moodsChartController(diagramContainer, dataset, radarChart);
+    const controller = moodsChartController(diagramContainer, dataset, radarChart, demo);
     controller.loadRange("short_term");
 
     onSelectorChange((event) => {

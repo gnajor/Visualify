@@ -2,7 +2,7 @@ import { apiCom } from "./apiCom/apiCom.js";
 import { updateNavMarker } from "./components/header/nav/nav.js";
 import { updateSwitchMarker } from "./components/header/switch/switch.js";
 import { handleRedirect } from "./logic/handleRedirect.js";
-import { getAllTopUserDataAndSetState, setStateToServer } from "./logic/utils.js";
+import { getAllTopUserDataAndSetState, setStateToServer, loadDemoDataAndSetState } from "./logic/utils.js";
 import { renderHomePage } from "./pages/homePage/homePage.js";
 import { renderPhoneHomePage } from "./pages/homePage/phoneHomePage.js";
 import { updateArtistDivPosition } from "./pages/mainPage/decadesPage/decadesPage.js";
@@ -12,7 +12,8 @@ import { renderStructure } from "./pages/mainPage/structure.js";
 
 export const State = {
     clientId: "aa99b24e94d448eab167b514b89f2de2",
-    redirectUri: "https://visualify.deno.dev/"/* "http://127.0.0.1:8888/" */,
+    redirectUri: /* "https://visualify.deno.dev/" */"http://127.0.0.1:8888/",
+    demoPressed: false,
     userData: {
         artists:{
             short_term: null,
@@ -101,7 +102,6 @@ const app = {
     currentVersion: undefined,
     isLoggedIn: false,
 
-
     async start(){
         const isTokenCorrect = await apiCom("token:auth");
         window.onresize = app.onResizeWindow;
@@ -139,19 +139,23 @@ const app = {
     startDesktopHomePage(){
         this.currentVersion = "desktop";
         this.parent.className = "desktop";
-        renderHomePage(this.parent);   
+        renderHomePage(this.parent, async () => {
+            State.demoPressed = true;
+            await loadDemoDataAndSetState();
+            this.startDesktopVersion();
+        });   
     },
 
     startPhoneVersion(){
         this.currentVersion = "phone";
         this.parent.className = "phone";
-        renderPhoneStructure(this.parent);
+        renderPhoneStructure(this.parent, State.demoPressed);
     },
 
     startDesktopVersion(){
         this.currentVersion = "desktop";
         this.parent.className = "desktop";
-        renderStructure(this.parent);
+        renderStructure(this.parent, State.demoPressed);
     },
 
     onResizeWindow(){
