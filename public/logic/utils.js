@@ -257,11 +257,13 @@ export function getGenreData(){
             });
         }
 
-        let result = genres.sort((firstItem, secItem) => secItem.value - firstItem.value);
+        let result = genres.sort((firstItem, secItem) => secItem.value - firstItem.value).slice(0, 50);
 
         State.setStateOverlayData("mostListenedGenre", range, result[0].genre);
         formatted[range] = result;
+
     }    
+    console.log(formatted)
     return formatted;
 }
 
