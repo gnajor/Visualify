@@ -12,7 +12,7 @@ import { renderStructure } from "./pages/mainPage/structure.js";
 
 export const State = {
     clientId: "aa99b24e94d448eab167b514b89f2de2",
-    redirectUri:/*  "https://visualify.gnajor.deno.net/" */"http://127.0.0.1:8888/",
+    redirectUri: "https://visualify.gnajor.deno.net/"/* "http://127.0.0.1:8888/" */,
     demoPressed: false,
     userData: {
         artists:{
