@@ -39,51 +39,67 @@ export async function getCountryFromWikdata(spotifyId: string): Promise<any | nu
 }
 
 export async function getSongsFeatures(songs: Array<any>): Promise<any | null>{
-    const apiKey = Deno.env.get("CEREBRAS_API_KEY");
+    const apiKey = Deno.env.get("GEMINI_API_KEY");
 
     if (!apiKey) {
         throw new Error("API key is missing");
     }
 
-    const instructions = `I want you to analyze the overall mood/feel of these songs one by one. Choose the top 2 categories from this list that best describe each song: Happy, Sad, Energy, Calm, Intense. Do NOT invent new categories. Ensure the JSON is syntactically valid and can be parsed by a standard JSON parser, formatted like this: [{"track": "Song Title 1", "artist": "Artist Name", "moods": ["Mood1","Mood2"]}] Do not add any extra text, comments, or line breaks.`;
-    let songsStr = "The songs and artists: ";
-
-    //console.log(songs);
+    const instructions = `I want you to analyze the overall mood/feel of these songs one by one. Choose the top 2 categories from this list that best describe each song: Happy, Sad, Energy, Calm, Intense. Do NOT invent new categories.`;
+    let songsStr = "The songs and artists:\n";
 
     for(const song of songs){
-        songsStr += `${song.title} by ${song.artist}`;
+        songsStr += `- ${song.title} by ${song.artist}\n`;
     }
 
-    const response = await fetch("https://api.cerebras.ai/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            model: "qwen-3-235b-a22b-instruct-2507",
-            messages: [
-                { role: "user", content: instructions + songsStr},
-            ],
-            max_tokens: 3000,          // long answer
-            temperature: 0.2,          // lower = more careful
-            top_p: 0.9              //no clue
-        }),
-    });
+    const response = await fetch(
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=" + apiKey,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                contents: [
+                    { role: "user", parts: [{ text: instructions + "\n\n" + songsStr }] },
+                ],
+                generationConfig: {
+                    temperature: 0.2,
+                    topP: 0.9,
+                    maxOutputTokens: 3000,
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "ARRAY",
+                        items: {
+                            type: "OBJECT",
+                            properties: {
+                                track: { type: "STRING" },
+                                artist: { type: "STRING" },
+                                moods: {
+                                    type: "ARRAY",
+                                    items: { type: "STRING" },
+                                },
+                            },
+                            required: ["track", "artist", "moods"],
+                        },
+                    },
+                },
+            }),
+        }
+    );
 
     const data = await response.json();
     console.log(data);
 
-    if(!data?.choices?.[0]?.message?.content){
-        return null;
-    }
 
+    const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    if(!rawText) return null;
+    
     let items;
     try {
-        items = JSON.parse(data.choices[0].message.content);
+        items = JSON.parse(rawText);
+        console.log(items)
     } 
-    catch (err) {
-        console.error("Invalid JSON from model:", data.choices[0].message.content);
+    catch{
+        console.error("Invalid JSON:", rawText);
         return null;
     }
 

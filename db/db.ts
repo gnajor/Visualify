@@ -57,7 +57,7 @@ export async function insertSongsBulk(data: {"song": Song, "album": Album, "arti
 }
 
 export async function getAllData(){
-    const {data, fetchError} = await supabase
+    const {data} = await supabase
         .from("artist")
         .select(`
             *,
@@ -75,8 +75,8 @@ export async function getAllData(){
             )
         `)
         .not("country", "is", null);
-
-    if(fetchError) throw fetchError;
+ 
+    //if(fetchError) throw fetchError;
 
     return data;
 }
