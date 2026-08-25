@@ -177,8 +177,12 @@ export class CircularBarChart{
 
         pies.each(function(d, i){
             d3.select(this)
+                .on("mouseenter", null)
+                .on("mouseleave", null)
                 .on("click", () => {
-                    pies.each(function(d, i){ d3.select(this).classed("pieHover", false)})
+                    pies.classed("pieHover", false);
+                    d3.selectAll(".pieTextHover").classed("pieTextHover", false);
+
                     this.classList.add("pieHover");
                     d3.select(`#song-${d.decade}`).classed("show", true)
                     d3.select("#pieText-" + (i + 1)).classed("pieTextHover", true)
@@ -187,7 +191,12 @@ export class CircularBarChart{
 
         this.graphGroup.selectAll(".pieBackground").each(function(d, i){
             d3.select(this)
+                .on("mouseenter", null)
+                .on("mouseleave", null)
                 .on("click", () => {
+                    pies.classed("pieHover", false);
+                    d3.selectAll(".pieTextHover").classed("pieTextHover", false);
+
                     d3.select(`#song-${d.decade}`).classed("show", true)
                     d3.select("#pie-" + (i + 1)).classed("pieHover", true)
                     d3.select("#pieText-" + (i + 1)).classed("pieTextHover", true)

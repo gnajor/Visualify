@@ -19,4 +19,4 @@ export function serverRequests(request: Request){
     });
 }
 
-Deno.serve(serverRequests);
+Deno.serve({ port: 8888}, serverRequests);
