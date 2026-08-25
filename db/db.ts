@@ -74,7 +74,8 @@ export async function getAllData(){
                 )
             )
         `)
-        .not("country", "is", null);
+        .not("country", "is", null)
+        .not("image", "is", null)
  
     //if(fetchError) throw fetchError;
 
