@@ -51,25 +51,6 @@ Visualify 2.0 is a Spotify analytics and music visualization web application bui
 
 ---
 
-# Project Structure
-
-```txt
-visualify.2.0/
-├── api/                 # API route handlers and utilities
-├── db/                  # Database queries, schema, and helpers
-├── public/              # Frontend application
-│   ├── components/      # Reusable UI components
-│   ├── logic/           # Frontend business logic
-│   ├── media/           # Static assets
-│   ├── pages/           # Application pages
-│   └── apiCom/          # Frontend API communication layer
-├── server/              # Deno server setup
-├── deno.json            # Deno configuration
-└── auth.env             # Environment variables
-```
-
----
-
 # Getting Started
 
 ## Prerequisites
